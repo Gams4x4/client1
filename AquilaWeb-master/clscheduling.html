@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheduling</title>
+  <link rel="stylesheet" href="CSS/style2.css">
+  <style>
+    /* Basic styling for popup modal */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 300px;
+      text-align: center;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Style for the Schedule button */
+    #scheduleBtn {
+      background-color: yellowgreen;    /* Red background color */
+      color: black;             /* White text color */
+      padding: 5px 10px;        /* Smaller padding */
+      font-size: 14px;          /* Smaller font size */
+      border: none;             /* Remove default border */
+      border-radius: 4px;       /* Rounded corners */
+      cursor: pointer;          /* Pointer cursor on hover */
+      display: block;           /* Make the button a block element */
+      margin-left: 100;          /* Align to the left */
+      margin-bottom: 15px;     /* Optional: add some space below the button */
+    }
+
+    #scheduleBtn:hover {
+      background-color: gold; /* Darker red on hover */
+    }
+
+    .appointments-list {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="logo.png" alt="Logo">
+      <h2>AQUILA CORPS</h2>
+      <a href="clientds.html" class="nav-link">Dashboard</a>
+      <a href="clscheduling.html" class="nav-link active">Scheduling</a>
+      <a href="clpayment.html" class="nav-link">Payment</a>
+      <a href="settings.html" class="nav-link">Settings</a>
+      <div class="theme-toggle">
+        <button>Light</button>
+        <button>Dark</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="header">
+        <h1>Scheduling</h1>
+        <p>Manage your project schedules here.</p>
+      </div>
+
+      <div class="content-section">
+        <div class="schedule-button-container">
+        <button id="scheduleBtn">Schedule</button> <!-- Schedule Button -->
+        
+        <h3>Upcoming Appointments</h3>
+        <ul id="appointmentsList" class="appointments-list">
+          <li>Project Alpha - August 20, 2023</li>
+          <li>Project Beta - August 25, 2023</li>
+          <li>Project Gamma - September 1, 2023</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Schedule Form -->
+  <div id="scheduleModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Schedule a Project</h3>
+      <form id="scheduleForm">
+        <label for="projectName">Project Name:</label><br>
+        <input type="text" id="projectName" required><br><br>
+        
+        <label for="appointmentDate">Select Date:</label><br>
+        <input type="date" id="appointmentDate" required><br><br>
+        
+        <button type="button" id="submitSchedule">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Modal functionality
+    const scheduleBtn = document.getElementById("scheduleBtn");
+    const scheduleModal = document.getElementById("scheduleModal");
+    const closeBtn = document.getElementsByClassName("close")[0];
+    
+    // Show the modal when the "Schedule" button is clicked
+    scheduleBtn.onclick = function() {
+      scheduleModal.style.display = "block";
+    };
+
+    // Close the modal when the close button (x) is clicked
+    closeBtn.onclick = function() {
+      scheduleModal.style.display = "none";
+    };
+
+    // Close the modal when clicking outside of the modal
+    window.onclick = function(event) {
+      if (event.target == scheduleModal) {
+        scheduleModal.style.display = "none";
+      }
+    };
+
+    // Handle form submission
+    document.getElementById("submitSchedule").onclick = function() {
+      const projectName = document.getElementById("projectName").value;
+      const appointmentDate = document.getElementById("appointmentDate").value;
+
+      if (projectName && appointmentDate) {
+        const appointmentsList = document.getElementById("appointmentsList");
+        const newAppointment = document.createElement("li");
+        newAppointment.textContent = `${projectName} - ${new Date(appointmentDate).toLocaleDateString()}`;
+
+        // Add the new appointment at the top of the list
+        appointmentsList.prepend(newAppointment);
+
+        // Clear the form fields and close the modal
+        document.getElementById("projectName").value = '';
+        document.getElementById("appointmentDate").value = '';
+        scheduleModal.style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>
