@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management System Login</title>
     <link rel="stylesheet" href="CSS/main.css">
+    <script>
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting immediately
 
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Check if the entered username and password match the credentials
+            if (username === "gamil" && password === "gamil") {
+                window.location.href = "clientds.html"; // Redirect to the client page
+            } else {
+                alert("Invalid username or password."); // Alert for invalid login
+            }
+        }
+    </script>
 </head>
 <body class="login-body">
     <video autoplay muted loop class="video-background">
@@ -15,8 +29,7 @@
     <div class="login-container">
         <div class="logo-placeholder"><img src="imgsrcs/aquila.png?w=150&h=150" alt="Aquila Corps Logo" class="logo"></div>
         <h1>System Management Portal</h1>
-        <form action="admin.html" method="GET">
-
+        <form onsubmit="validateLogin(event)">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
             
@@ -24,9 +37,6 @@
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
             
             <button type="submit">Log In</button>
-        </form>
-        <form action="clientds.html" method="GET">
-            <button type="submit" class="client-login-button">Login as Client</button>
         </form>
         <div class="forgot-password">
             <a href="#">Forgot password?</a>
