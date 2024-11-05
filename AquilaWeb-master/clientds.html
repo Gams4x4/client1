@@ -12,7 +12,7 @@
     <div class="sidebar">
       <img src="logo.png" alt="Logo">
       <h2>AQUILA CORPS</h2>
-      <a href=".html" class="nav-link" id="dashboard-link">Dashboard</a>
+      <a href="clientds.html" class="nav-link" id="dashboard-link">Dashboard</a>
       <a href="clscheduling.html" class="nav-link" id="scheduling-link">Scheduling</a>
       <a href="clpayment.html" class="nav-link" id="payment-link">Payment</a>
       <a href="settings.html" class="nav-link" id="settings-link">Settings</a>
@@ -32,8 +32,8 @@
       <div class="dashboard-cards">
         <div class="card">
           <h3>Projects to Scheduled</h3>
-          <div class="value" id="projectsScheduled">2</div>
-          <div class="updated">Updated: July 16, 2023</div>
+          <div class="value" id="projectsScheduled">0</div>
+          <div class="updated">Updated: <span id="lastUpdated"></span></div>
         </div>
         <div class="card">
           <h3>Paid Projects</h3>
@@ -60,6 +60,25 @@
     if (pageLinkMap[currentPage]) {
       document.getElementById(pageLinkMap[currentPage]).classList.add("active");
     }
+
+    // Function to update "Projects to Scheduled" count and date
+    function updateProjectsScheduled() {
+      const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+      document.getElementById("projectsScheduled").textContent = appointments.length;
+      
+      const now = new Date();
+      document.getElementById("lastUpdated").textContent = now.toLocaleDateString();
+    }
+
+    // Update on page load
+    document.addEventListener("DOMContentLoaded", updateProjectsScheduled);
+
+    // Listen for changes in localStorage (for real-time update across tabs)
+    window.addEventListener("storage", function(event) {
+      if (event.key === "appointments") {
+        updateProjectsScheduled();
+      }
+    });
   </script>
 </body>
 </html>
